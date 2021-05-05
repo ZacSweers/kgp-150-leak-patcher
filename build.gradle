@@ -1,0 +1,56 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
+        classpath "com.vanniktech:gradle-maven-publish-plugin:${maven_publish_plugin_version}"
+        classpath "org.jetbrains.kotlinx:binary-compatibility-validator:${binary_validator_version}"
+    }
+}
+
+apply plugin: "binary-compatibility-validator"
+apply plugin: "java-gradle-plugin"
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "org.jetbrains.kotlin.kapt"
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: "com.vanniktech.maven.publish"
+
+repositories {
+    mavenCentral()
+}
+
+gradlePlugin {
+    plugins {
+        redactedPlugin {
+            id = 'dev.zacsweers.kgp-150-leak-patcher'
+            implementationClass = 'dev.zacsweers.kgp.Kgp150LeakPatcherPlugin'
+        }
+    }
+}
+
+tasks.named("dokkaHtml") {
+    outputDirectory.set(rootProject.file("../docs/0.x"))
+    dokkaSourceSets.configureEach {
+        skipDeprecated.set(true)
+    }
+}
+
+String resolvedJvmTarget = System.getenv().getOrDefault("ci_java_version", "1.8")
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = resolvedJvmTarget
+        freeCompilerArgs += ['-progressive']
+    }
+}
+
+dependencies {
+    compileOnly "org.jetbrains.kotlin:kotlin-gradle-plugin-api:$kotlin_version"
+    compileOnly "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    // For access to CompilerSystemProperties
+    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version")
+}
