@@ -12,9 +12,8 @@ applicable for KGP 1.5.0 (not 1.4.32, should be fixed in 1.5.10). Any other vers
 a warning and no-op.
 
 ```kotlin
-// Apply in the root build.gradle file
 plugins {
- id("dev.zacsweers.kgp-150-leak-patcher") version "1.0.0"
+  id("dev.zacsweers.kgp-150-leak-patcher") version "1.0.0"
 }
 
 // Or legacy way
