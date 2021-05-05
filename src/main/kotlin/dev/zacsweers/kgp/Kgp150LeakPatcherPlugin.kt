@@ -30,10 +30,6 @@ class Kgp150LeakPatcherPlugin : Plugin<Project> {
   }
 }
 
-fun main() {
-  println(CompilerSystemProperties::class.java.`package`.implementationVersion)
-}
-
 private val KGP_150 = VersionNumber.parse("1.5.0")
 
 private class SystemPropertyGetter : (String) -> String? {
