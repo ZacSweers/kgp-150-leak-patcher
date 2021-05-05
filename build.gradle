@@ -25,7 +25,7 @@ repositories {
 
 gradlePlugin {
     plugins {
-        redactedPlugin {
+        kgpLeakPatcher {
             id = 'dev.zacsweers.kgp-150-leak-patcher'
             implementationClass = 'dev.zacsweers.kgp.Kgp150LeakPatcherPlugin'
         }
