@@ -51,5 +51,9 @@ dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-gradle-plugin-api:$kotlin_version"
     compileOnly "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     // For access to CompilerSystemProperties
-    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version")
+    compileOnly "org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version"
+
+    testImplementation "org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "com.google.truth:truth:1.1.2"
 }
