@@ -12,12 +12,9 @@ import org.jetbrains.kotlin.cli.common.CompilerSystemProperties
  */
 class Kgp150LeakPatcherPlugin : Plugin<Project> {
   override fun apply(project: Project) {
-    // implementationVersion is like '1.5.0-release-749 (1.5.0)'
-    val embeddableVersion = CompilerSystemProperties::class.java.`package`
-      .implementationVersion
-      .substringBefore("-")
+    val embeddableVersion = parseCompilerEmbeddedVersionNumber()
 
-    if (VersionNumber.parse(embeddableVersion).baseVersion != KGP_150) {
+    if (isApplicable(embeddableVersion)) {
       project.logger.warn("KGP 1.5.0 Leak Patcher plugin is only applicable to Kotlin 1.5.0. Detected version '$embeddableVersion'.")
       return
     }
@@ -31,6 +28,29 @@ class Kgp150LeakPatcherPlugin : Plugin<Project> {
 }
 
 private val KGP_150 = VersionNumber.parse("1.5.0")
+
+internal fun isApplicable(versionNumber: VersionNumber = parseCompilerEmbeddedVersionNumber()): Boolean {
+  return versionNumber == KGP_150
+}
+
+private fun parseCompilerEmbeddedVersion(): String? {
+  // implementationVersion is like '1.5.0-release-749 (1.5.0)'
+  return try {
+    CompilerSystemProperties::class.java.`package`.implementationVersion
+  } catch (e: NoClassDefFoundError) {
+    // Cover for old plugins
+    return null
+  }
+}
+
+internal fun parseCompilerEmbeddedVersionNumber(
+  version: String? = parseCompilerEmbeddedVersion()
+): VersionNumber {
+  return version?.substringBefore("-")
+    ?.let(VersionNumber::parse)
+    ?.baseVersion
+    ?: VersionNumber.UNKNOWN
+}
 
 private class SystemPropertyGetter : (String) -> String? {
   override operator fun invoke(p1: String): String? = System.getProperty(p1)
