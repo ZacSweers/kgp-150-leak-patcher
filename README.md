@@ -7,8 +7,8 @@ Implementation based on [David Burström](https://github.com/davidburstrom)'s wo
 
 ## Usage
 
-Apply the plugin in the root `build.gradle` file, no other configuration needed. It will no-op if 
-the detected runtime version of KGP is not `1.5.0`.
+Apply the plugin in the root `build.gradle` file, no other configuration needed. It is only 
+applicable for KGP 1.5.0 (not 1.4.32, should be fixed in 1.5.10).
 
 ```kotlin
 // Apply in the root build.gradle file
