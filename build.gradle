@@ -16,7 +16,6 @@ buildscript {
 apply plugin: "binary-compatibility-validator"
 apply plugin: "java-gradle-plugin"
 apply plugin: "org.jetbrains.kotlin.jvm"
-apply plugin: "org.jetbrains.kotlin.kapt"
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: "com.vanniktech.maven.publish"
 
