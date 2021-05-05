@@ -25,33 +25,31 @@ class Kgp150LeakPatcherPlugin : Plugin<Project> {
       CompilerSystemProperties.systemPropertyCleaner = SystemPropertyCleaner()
     }
   }
+}
 
-  internal companion object {
-    private val KGP_150 = VersionNumber.parse("1.5.0")
+private val KGP_150 = VersionNumber.parse("1.5.0")
 
-    fun isApplicable(versionNumber: VersionNumber = parseCompilerEmbeddedVersionNumber()): Boolean {
-      return versionNumber == KGP_150
-    }
+internal fun isApplicable(versionNumber: VersionNumber = parseCompilerEmbeddedVersionNumber()): Boolean {
+  return versionNumber == KGP_150
+}
 
-    private fun parseCompilerEmbeddedVersion(): String? {
-      // implementationVersion is like '1.5.0-release-749 (1.5.0)'
-      return try {
-        CompilerSystemProperties::class.java.`package`.implementationVersion
-      } catch (e: NoClassDefFoundError) {
-        // Cover for old plugins
-        return null
-      }
-    }
-
-    fun parseCompilerEmbeddedVersionNumber(
-      version: String? = parseCompilerEmbeddedVersion()
-    ): VersionNumber {
-      return version?.substringBefore("-")
-        ?.let(VersionNumber::parse)
-        ?.baseVersion
-        ?: VersionNumber.UNKNOWN
-    }
+private fun parseCompilerEmbeddedVersion(): String? {
+  // implementationVersion is like '1.5.0-release-749 (1.5.0)'
+  return try {
+    CompilerSystemProperties::class.java.`package`.implementationVersion
+  } catch (e: NoClassDefFoundError) {
+    // Cover for old plugins
+    return null
   }
+}
+
+internal fun parseCompilerEmbeddedVersionNumber(
+  version: String? = parseCompilerEmbeddedVersion()
+): VersionNumber {
+  return version?.substringBefore("-")
+    ?.let(VersionNumber::parse)
+    ?.baseVersion
+    ?: VersionNumber.UNKNOWN
 }
 
 private class SystemPropertyGetter : (String) -> String? {
