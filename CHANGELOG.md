@@ -1,9 +1,9 @@
 Changelog
 =========
 
-1.0.0 (WIP)
+1.0.0
 -----
 
-_yyyy_mm_dd_
+_2021-05-05_
 
-WIP
+Initial release.
