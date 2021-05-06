@@ -14,7 +14,7 @@ class Kgp150LeakPatcherPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     val embeddableVersion = parseCompilerEmbeddedVersionNumber()
 
-    if (isApplicable(embeddableVersion)) {
+    if (!isApplicable(embeddableVersion)) {
       project.logger.warn("KGP 1.5.0 Leak Patcher plugin is only applicable to Kotlin 1.5.0. Detected version '$embeddableVersion'.")
       return
     }
