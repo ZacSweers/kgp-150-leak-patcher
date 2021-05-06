@@ -13,13 +13,13 @@ a warning and no-op.
 
 ```kotlin
 plugins {
-  id("dev.zacsweers.kgp-150-leak-patcher") version "1.0.0"
+  id("dev.zacsweers.kgp-150-leak-patcher") version "1.0.1"
 }
 
 // Or legacy way
 buildscript {
   dependencies {
-    classpath("dev.zacsweers:kgp-150-leak-patcher:1.0.0")
+    classpath("dev.zacsweers:kgp-150-leak-patcher:1.0.1")
   }
 }
 
