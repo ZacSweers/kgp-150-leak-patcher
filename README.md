@@ -15,13 +15,13 @@ The minimum required Gradle version is `6.1`.
 
 ```kotlin
 plugins {
-  id("dev.zacsweers.kgp-150-leak-patcher") version "1.0.1"
+  id("dev.zacsweers.kgp-150-leak-patcher") version "1.1.0"
 }
 
 // Or legacy way
 buildscript {
   dependencies {
-    classpath("dev.zacsweers:kgp-150-leak-patcher:1.0.1")
+    classpath("dev.zacsweers:kgp-150-leak-patcher:1.1.0")
   }
 }
 
