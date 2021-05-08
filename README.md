@@ -26,6 +26,9 @@ buildscript {
 apply(plugin = "dev.zacsweers.kgp-150-leak-patcher")
 ```
 
+If you need to disable the applicability check for some reason, it can be disabled by setting the
+`kgp15leak.checkApplicability` property to `false`.
+
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snapshots].
 
 License

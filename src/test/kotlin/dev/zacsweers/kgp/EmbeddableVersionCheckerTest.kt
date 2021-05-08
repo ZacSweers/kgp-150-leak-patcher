@@ -34,4 +34,11 @@ class EmbeddableVersionCheckerTest {
     val version = parseCompilerEmbeddedVersionNumber()
     assertThat(version).isEqualTo(VersionNumber.parse(target))
   }
+
+  @Test
+  fun applicability() {
+    assertThat(shouldCheckApplicability("true")).isTrue()
+    assertThat(shouldCheckApplicability("false")).isFalse()
+    assertThat(shouldCheckApplicability(null)).isTrue()
+  }
 }
