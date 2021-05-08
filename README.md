@@ -28,10 +28,6 @@ apply(plugin = "dev.zacsweers.kgp-150-leak-patcher")
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snapshots].
 
-## Caveats
-
-Due to its usage of a `BuildListener`, this plugin is incompatible with [Configuration Caching](https://docs.gradle.org/current/userguide/configuration_cache.html). This is unavoidable (the leak it patches was, itself, part of work to make KGP compatible with Configurationg Caching), so you would need to put potentially enabling that on hold until Kotlin 1.5.10 (ETA ~end of May).
-
 License
 -------
 

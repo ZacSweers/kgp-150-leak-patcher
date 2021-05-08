@@ -19,11 +19,9 @@ class Kgp150LeakPatcherPlugin : Plugin<Project> {
       return
     }
 
-    project.gradle.buildFinished {
-      CompilerSystemProperties.systemPropertyGetter = SystemPropertyGetter()
-      CompilerSystemProperties.systemPropertySetter = SystemPropertySetter()
-      CompilerSystemProperties.systemPropertyCleaner = SystemPropertyCleaner()
-    }
+    project.gradle.sharedServices.registerIfAbsent("kgp-150-leak-patcher", Kgp150LeakPatcherBuildService::class.java) {}
+      // Force the BuildService to be loaded into memory immediately.
+      .get()
   }
 }
 
@@ -50,16 +48,4 @@ internal fun parseCompilerEmbeddedVersionNumber(
     ?.let(VersionNumber::parse)
     ?.baseVersion
     ?: VersionNumber.UNKNOWN
-}
-
-private class SystemPropertyGetter : (String) -> String? {
-  override operator fun invoke(p1: String): String? = System.getProperty(p1)
-}
-
-private class SystemPropertySetter : (String, String) -> String? {
-  override operator fun invoke(o1: String, o2: String): String = System.setProperty(o1, o2)
-}
-
-private class SystemPropertyCleaner : (String) -> String? {
-  override operator fun invoke(p1: String): String = System.clearProperty(p1)
 }
