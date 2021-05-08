@@ -12,20 +12,32 @@ import org.jetbrains.kotlin.cli.common.CompilerSystemProperties
  */
 class Kgp150LeakPatcherPlugin : Plugin<Project> {
   override fun apply(project: Project) {
-    val embeddableVersion = parseCompilerEmbeddedVersionNumber()
-
-    if (!isApplicable(embeddableVersion)) {
-      project.logger.warn("KGP 1.5.0 Leak Patcher plugin is only applicable to Kotlin 1.5.0. Detected version '$embeddableVersion'.")
-      return
+    if (shouldCheckApplicability(project.findProperty(APPLICABILITY_CHECK_PROP))) {
+      val embeddableVersion = parseCompilerEmbeddedVersionNumber()
+      if (!isApplicable(embeddableVersion)) {
+        project.logger.warn("KGP 1.5.0 Leak Patcher plugin is only applicable to Kotlin 1.5.0. Detected version '$embeddableVersion'.")
+        return
+      }
     }
 
     project.gradle.sharedServices.registerIfAbsent("kgp-150-leak-patcher", Kgp150LeakPatcherBuildService::class.java) {}
       // Force the BuildService to be loaded into memory immediately.
       .get()
   }
+
+  companion object {
+    /** A boolean gradle property to disable applicability checks. Use at your own risk! */
+    const val APPLICABILITY_CHECK_PROP = "kgp15leak.checkApplicability"
+  }
 }
 
 private val KGP_150 = VersionNumber.parse("1.5.0")
+
+internal fun shouldCheckApplicability(propValue: Any?): Boolean {
+  return propValue?.toString()
+    ?.toBoolean()
+    ?: true
+}
 
 internal fun isApplicable(versionNumber: VersionNumber = parseCompilerEmbeddedVersionNumber()): Boolean {
   return versionNumber == KGP_150
