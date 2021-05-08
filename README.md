@@ -11,6 +11,8 @@ Apply the plugin in the root `build.gradle` file, no other configuration needed.
 applicable for KGP 1.5.0 (not 1.4.32, should be fixed in 1.5.10). Any other version will print
 a warning and no-op.
 
+The minimum required Gradle version is `6.1`.
+
 ```kotlin
 plugins {
   id("dev.zacsweers.kgp-150-leak-patcher") version "1.0.1"
