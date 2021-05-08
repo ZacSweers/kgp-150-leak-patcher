@@ -5,9 +5,7 @@ Releasing
  2. Update the `CHANGELOG.md` for the impending release.
  3. `git commit -am "Prepare for release X.Y.Z."` (where X.Y.Z is the new version)
  4. `git tag -a X.Y.Z -m "Version X.Y.Z"` (where X.Y.Z is the new version)
- 5. `./gradlew clean assemble`
- 6. `./gradlew uploadArchives --no-parallel -x dokkaHtml`
- 7. `./gradlew closeAndReleaseRepository`
- 8. Update the `gradle.properties` to the next SNAPSHOT version.
- 9. `git commit -am "Prepare next development version."`
- 10. `git push && git push --tags`
+ 5. `./gradlew clean uploadArchives --no-parallel && ./gradlew closeAndReleaseRepository`
+ 6. Update the `gradle.properties` to the next SNAPSHOT version.
+ 7. `git commit -am "Prepare next development version."`
+ 8. `git push && git push --tags`
